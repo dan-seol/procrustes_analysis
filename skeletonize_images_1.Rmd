@@ -1,0 +1,58 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(EBImage)
+bilobe1 <- readImage('bilobe1_rgb.png')
+bilobe2 <- readImage('bilobe2_rgb.png')
+bilobe1
+```
+
+```{r}
+library(dipr)
+library(magrittr)
+binary_bilobe1 <- bilobe1 %>% channel(., "gray") %>% `>`(., 0.5) %>% bwlabel(.)
+binary_bilobe2 <- bilobe2 %>% channel(., "gray") %>% `>`(., 0.5) %>% bwlabel(.)
+
+```
+```{r}
+display(binary_bilobe1)
+```
+
+```{r}
+display(binary_bilobe2)
+```
+
+```{r}
+sk_bilobe1 <- binary_bilobe1 %>% skeletonize
+sk_bilobe2 <- binary_bilobe2 %>% skeletonize
+```
+```{r}
+print(dim(sk_bilobe1))
+print(dim(sk_bilobe2))
+```
+
+```{r}
+writeImage(sk_bilobe1, "skeleton_bilobe1.png")
+writeImage(sk_bilobe2, "skeleton_bilobe2.png")
+
+```
+
+```{r}
+samples_layered <- array(c(sk_bilobe1, sk_bilobe2), dim=c(2048, 2732, 2))
+```
+
+```{r}
+library(shapes)
+library(compiler)
+procGPAcompiled <- cmpfun(procGPA)
+```
+
+
+```{r}
+procGPAcompiled(samples_layered, reflect=TRUE)
+```
+
+

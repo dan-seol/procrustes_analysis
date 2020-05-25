@@ -1,0 +1,5 @@
+library(shapes)
+data(gorf.dat)
+data(gorm.dat)
+print(dim(gorf.dat))
+print(dim(gorm.dat))
