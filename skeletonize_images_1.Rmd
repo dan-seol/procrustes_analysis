@@ -4,17 +4,40 @@ output: html_notebook
 ---
 
 ```{r}
+#Import all the required R packages.
 library(EBImage)
+library(dipr)
+library(magrittr)
+library(seriation)
+library(shapes)
+library(compiler)
+library(Rcpp)
+library(RcppArmadillo)
+sourceCpp("imageThinning.cpp")
+```
+
+
+
+
+```{r}
+#testing functions in Helper.cpp
+m1 = matrix(c(1,2,3,4), nrow=2)
+m2 = matrix(c(1,2,2,4), nrow=2)
+diff = abs_diff(m1, m2)
+countNonZero(diff)
+```
+
+
+```{r}
 bilobe1 <- readImage('bilobe1_rgb.png')
 bilobe2 <- readImage('bilobe2_rgb.png')
 bilobe1
 ```
 
 ```{r}
-library(dipr)
-library(magrittr)
-binary_bilobe1 <- bilobe1 %>% channel(., "gray") %>% `>`(., 0.5) %>% bwlabel(.)
-binary_bilobe2 <- bilobe2 %>% channel(., "gray") %>% `>`(., 0.5) %>% bwlabel(.)
+
+binary_bilobe1 <- bilobe1 %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.)
+binary_bilobe2 <- bilobe2 %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.)
 
 ```
 ```{r}
@@ -26,27 +49,38 @@ display(binary_bilobe2)
 ```
 
 ```{r}
-sk_bilobe1 <- binary_bilobe1 %>% skeletonize
-sk_bilobe2 <- binary_bilobe2 %>% skeletonize
+# sk_bilobe1 <- binary_bilobe1 %>% skeletonize
+# sk_bilobe2 <- binary_bilobe2 %>% skeletonize
 ```
 ```{r}
-print(dim(sk_bilobe1))
-print(dim(sk_bilobe2))
+# print(dim(sk_bilobe1))
+# print(dim(sk_bilobe2))
 ```
 
 ```{r}
-writeImage(sk_bilobe1, "skeleton_bilobe1.png")
-writeImage(sk_bilobe2, "skeleton_bilobe2.png")
+# writeImage(sk_bilobe1, "skeleton_bilobe1.png")
+# writeImage(sk_bilobe2, "skeleton_bilobe2.png")
 
 ```
+
+```{r}
+thinned1 <- binary_bilobe1 %>% thinImage
+display(thinned1)
+```
+
+
+```{r}
+thinned2 <- binary_bilobe2 %>% thinImage
+display(thinned2)
+```
+
 
 ```{r}
 samples_layered <- array(c(sk_bilobe1, sk_bilobe2), dim=c(2048, 2732, 2))
 ```
 
 ```{r}
-library(shapes)
-library(compiler)
+
 procGPAcompiled <- cmpfun(procGPA)
 ```
 
