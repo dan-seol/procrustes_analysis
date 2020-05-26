@@ -1,0 +1,100 @@
+---
+title: A simple algorithm to get the TRS-invariant shape different between surgical
+  markings
+author: "Yunheum Dan Seol"
+date: "5/26/2020"
+output: pdf_document
+---
+
+```{r}
+#install all the R packages.
+#if the packages are not installed, please uncomment the line below and run it;
+#install.packages(c("BiocManager", "magrittr", "shapes", "Rcpp", "RcppArmadillo", "kmlShape"))
+```
+
+
+```{r}
+#Import all the required R packages.
+library(compiler)
+library(magrittr)
+library(EBImage)
+library(shapes)
+library(kmlShape)
+library(Rcpp)
+library(RcppArmadillo)
+#these are helper modules written in RcppArmadillo for faster computation
+sourceCpp("imageThinning.cpp")
+sourceCpp("downSamplePoints.cpp")
+```
+
+
+```{r}
+#testing functions in imageThinning.cpp
+m1 = matrix(c(1,2,3,4), nrow=2)
+m2 = matrix(c(1,2,2,4), nrow=2)
+diff = abs_diff(m1, m2)
+countNonZero(diff)
+```
+
+
+```{r}
+bilobe1 <- readImage('bilobe1_rgb.png')
+bilobe2 <- readImage('bilobe2_rgb.png')
+#bilobe1
+```
+
+```{r}
+binary_bilobe1 <- bilobe1 %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.)
+binary_bilobe2 <- bilobe2 %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.)
+
+```
+```{r}
+display(binary_bilobe1)
+```
+
+```{r}
+display(binary_bilobe2)
+```
+
+```{r}
+thinned1 <- binary_bilobe1 %>% thinImage
+display(thinned1)
+```
+
+
+```{r}
+thinned2 <- binary_bilobe2 %>% thinImage
+display(thinned2)
+```
+
+```{r}
+writeImage(thinned1, "thinned_bilobe1.png")
+writeImage(thinned2, "thinned_bilobe2.png")
+```
+
+```{r}
+#print(dim(getCurvePoints(thinned1))) # 1037 2
+#print(dim(getCurvePoints(thinned2))) # 1751 2
+curvePoints1 <- getCurvePoints(thinned1)
+curvePoints2 <- getCurvePoints(thinned2)
+dim1 <- dim(curvePoints1)[1]
+dim2 <- dim(curvePoints2)[1]
+minDim <- min(dim1, dim2)
+updatedCurvePoints1 <- DouglasPeuckerNbPoints(curvePoints1$x_coords, curvePoints1$y_coords, minDim)
+updatedCurvePoints2 <- DouglasPeuckerNbPoints(curvePoints2$x_coords, curvePoints2$y_coords, minDim)
+
+```
+
+
+```{r}
+arr1 <- as.matrix(updatedCurvePoints1)
+arr2 <- as.matrix(updatedCurvePoints2)
+samples_layered <- array(c(arr1, arr2), dim=c(minDim, 2, 2))
+```
+
+```{r}
+procGPAcompiled <- cmpfun(procGPA)
+procGPAcompiled(samples_layered, reflect=FALSE)
+```
+
+

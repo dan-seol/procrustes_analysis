@@ -34,9 +34,10 @@ arma::mat abs_diff(const arma::mat& m1, const arma::mat& m2) {
 }
 
 //[[Rcpp::export]]
-arma::uword countNonZero(const arma::mat& mtx) {
+int countNonZero(const arma::mat& mtx) {
   arma::vec v = mtx.elem(find(mtx > 0));
-  return v.size();
+  //careful with image dimension!!!
+  return (int) v.size();
 }
 
 //[[Rcpp::export]]
@@ -91,7 +92,7 @@ arma::mat thinImage(const arma::mat& imageMatrix) {
     diff = abs_diff(im, prev);
     prev = im;
     
-    if (countNonZero(diff) == 0U) {
+    if (countNonZero(diff) == 0) {
       break;
     }
   }
