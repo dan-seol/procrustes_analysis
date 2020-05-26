@@ -3398,9 +3398,23 @@ summary {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0ltcG9ydCBhbGwgdGhlIHJlcXVpcmVkIFIgcGFja2FnZXMuXG5saWJyYXJ5KEVCSW1hZ2UpXG5saWJyYXJ5KGRpcHIpXG5saWJyYXJ5KG1hZ3JpdHRyKVxubGlicmFyeShzZXJpYXRpb24pXG5saWJyYXJ5KHNoYXBlcylcbmxpYnJhcnkoY29tcGlsZXIpXG5saWJyYXJ5KFJjcHApXG5saWJyYXJ5KFJjcHBBcm1hZGlsbG8pXG5zb3VyY2VDcHAoXCJIZWxwZXIuY3BwXCIpXG5gYGAifQ== -->
-<pre class="r"><code>#Import all the required R packages.
-library(EBImage)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0ltcG9ydCBhbGwgdGhlIHJlcXVpcmVkIFIgcGFja2FnZXMuXG5gYGAifQ== -->
+<pre class="r"><code>#Import all the required R packages.</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZyBtZXNzYWdlczpcbjE6IEluIHJlYWRDaGFyKGZpbGUsIHNpemUsIFRSVUUpIDogdHJ1bmNhdGluZyBzdHJpbmcgd2l0aCBlbWJlZGRlZCBudWxzXG4yOiBJbiByZWFkQ2hhcihmaWxlLCBzaXplLCBUUlVFKSA6IHRydW5jYXRpbmcgc3RyaW5nIHdpdGggZW1iZWRkZWQgbnVsc1xuMzogSW4gcmVhZENoYXIoZmlsZSwgc2l6ZSwgVFJVRSkgOiB0cnVuY2F0aW5nIHN0cmluZyB3aXRoIGVtYmVkZGVkIG51bHNcbjQ6IEluIHJlYWRDaGFyKGZpbGUsIHNpemUsIFRSVUUpIDogdHJ1bmNhdGluZyBzdHJpbmcgd2l0aCBlbWJlZGRlZCBudWxzXG41OiBJbiByZWFkQ2hhcihmaWxlLCBzaXplLCBUUlVFKSA6IHRydW5jYXRpbmcgc3RyaW5nIHdpdGggZW1iZWRkZWQgbnVsc1xuNjogSW4gcmVhZENoYXIoZmlsZSwgc2l6ZSwgVFJVRSkgOiB0cnVuY2F0aW5nIHN0cmluZyB3aXRoIGVtYmVkZGVkIG51bHNcbjc6IEluIHJlYWRDaGFyKGZpbGUsIHNpemUsIFRSVUUpIDogdHJ1bmNhdGluZyBzdHJpbmcgd2l0aCBlbWJlZGRlZCBudWxzXG44OiBJbiByZWFkQ2hhcihmaWxlLCBzaXplLCBUUlVFKSA6IHRydW5jYXRpbmcgc3RyaW5nIHdpdGggZW1iZWRkZWQgbnVsc1xuOTogSW4gcmVhZENoYXIoZmlsZSwgc2l6ZSwgVFJVRSkgOiB0cnVuY2F0aW5nIHN0cmluZyB3aXRoIGVtYmVkZGVkIG51bHNcbiJ9 -->
+<pre><code>Warning messages:
+1: In readChar(file, size, TRUE) : truncating string with embedded nuls
+2: In readChar(file, size, TRUE) : truncating string with embedded nuls
+3: In readChar(file, size, TRUE) : truncating string with embedded nuls
+4: In readChar(file, size, TRUE) : truncating string with embedded nuls
+5: In readChar(file, size, TRUE) : truncating string with embedded nuls
+6: In readChar(file, size, TRUE) : truncating string with embedded nuls
+7: In readChar(file, size, TRUE) : truncating string with embedded nuls
+8: In readChar(file, size, TRUE) : truncating string with embedded nuls
+9: In readChar(file, size, TRUE) : truncating string with embedded nuls</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShFQkltYWdlKVxubGlicmFyeShkaXByKVxubGlicmFyeShtYWdyaXR0cilcbmxpYnJhcnkoc2VyaWF0aW9uKVxubGlicmFyeShzaGFwZXMpXG5saWJyYXJ5KGNvbXBpbGVyKVxubGlicmFyeShSY3BwKVxubGlicmFyeShSY3BwQXJtYWRpbGxvKVxuc291cmNlQ3BwKFwiaW1hZ2VUaGlubmluZy5jcHBcIilcbmBgYCJ9 -->
+<pre class="r"><code>library(EBImage)
 library(dipr)
 library(magrittr)
 library(seriation)
@@ -3408,7 +3422,7 @@ library(shapes)
 library(compiler)
 library(Rcpp)
 library(RcppArmadillo)
-sourceCpp(&quot;Helper.cpp&quot;)</code></pre>
+sourceCpp(&quot;imageThinning.cpp&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -3496,29 +3510,6 @@ binary_bilobe2 &lt;- bilobe2 %&gt;% channel(., &quot;gray&quot;) %&gt;% `&lt;`(.
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBza19iaWxvYmUxIDwtIGJpbmFyeV9iaWxvYmUxICU+JSBza2VsZXRvbml6ZVxuIyBza19iaWxvYmUyIDwtIGJpbmFyeV9iaWxvYmUyICU+JSBza2VsZXRvbml6ZVxuYGBgIn0= -->
-<pre class="r"><code># sk_bilobe1 &lt;- binary_bilobe1 %&gt;% skeletonize
-# sk_bilobe2 &lt;- binary_bilobe2 %&gt;% skeletonize</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwcmludChkaW0oc2tfYmlsb2JlMSkpXG4jIHByaW50KGRpbShza19iaWxvYmUyKSlcbmBgYCJ9 -->
-<pre class="r"><code># print(dim(sk_bilobe1))
-# print(dim(sk_bilobe2))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB3cml0ZUltYWdlKHNrX2JpbG9iZTEsIFwic2tlbGV0b25fYmlsb2JlMS5wbmdcIilcbiMgd3JpdGVJbWFnZShza19iaWxvYmUyLCBcInNrZWxldG9uX2JpbG9iZTIucG5nXCIpXG5cbmBgYCJ9 -->
-<pre class="r"><code># writeImage(sk_bilobe1, &quot;skeleton_bilobe1.png&quot;)
-# writeImage(sk_bilobe2, &quot;skeleton_bilobe2.png&quot;)
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGhpbm5lZDEgPC0gYmluYXJ5X2JpbG9iZTEgJT4lIHRoaW5JbWFnZVxuZGlzcGxheSh0aGlubmVkMSlcbmBgYCJ9 -->
 <pre class="r"><code>thinned1 &lt;- binary_bilobe1 %&gt;% thinImage
 display(thinned1)</code></pre>
@@ -3557,6 +3548,14 @@ display(thinned2)</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGVJbWFnZSh0aGlubmVkMSwgXCJ0aGlubmVkX2JpbG9iZTEucG5nXCIpXG53cml0ZUltYWdlKHRoaW5uZWQyLCBcInRoaW5uZWRfYmlsb2JlMi5wbmdcIilcbmBgYCJ9 -->
+<pre class="r"><code>writeImage(thinned1, &quot;thinned_bilobe1.png&quot;)
+writeImage(thinned2, &quot;thinned_bilobe2.png&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FtcGxlc19sYXllcmVkIDwtIGFycmF5KGMoc2tfYmlsb2JlMSwgc2tfYmlsb2JlMiksIGRpbT1jKDIwNDgsIDI3MzIsIDIpKVxuYGBgIn0= -->
 <pre class="r"><code>samples_layered &lt;- array(c(sk_bilobe1, sk_bilobe2), dim=c(2048, 2732, 2))</code></pre>
 <!-- rnb-source-end -->
@@ -3579,7 +3578,7 @@ procGPAcompiled &lt;- cmpfun(procGPA)</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCiNJbXBvcnQgYWxsIHRoZSByZXF1aXJlZCBSIHBhY2thZ2VzLg0KbGlicmFyeShFQkltYWdlKQ0KbGlicmFyeShkaXByKQ0KbGlicmFyeShtYWdyaXR0cikNCmxpYnJhcnkoc2VyaWF0aW9uKQ0KbGlicmFyeShzaGFwZXMpDQpsaWJyYXJ5KGNvbXBpbGVyKQ0KbGlicmFyeShSY3BwKQ0KbGlicmFyeShSY3BwQXJtYWRpbGxvKQ0Kc291cmNlQ3BwKCJpbWFnZVRoaW5uaW5nLmNwcCIpDQpgYGANCg0KDQoNCg0KYGBge3J9DQojdGVzdGluZyBmdW5jdGlvbnMgaW4gSGVscGVyLmNwcA0KbTEgPSBtYXRyaXgoYygxLDIsMyw0KSwgbnJvdz0yKQ0KbTIgPSBtYXRyaXgoYygxLDIsMiw0KSwgbnJvdz0yKQ0KZGlmZiA9IGFic19kaWZmKG0xLCBtMikNCmNvdW50Tm9uWmVybyhkaWZmKQ0KYGBgDQoNCg0KYGBge3J9DQpiaWxvYmUxIDwtIHJlYWRJbWFnZSgnYmlsb2JlMV9yZ2IucG5nJykNCmJpbG9iZTIgPC0gcmVhZEltYWdlKCdiaWxvYmUyX3JnYi5wbmcnKQ0KYmlsb2JlMQ0KYGBgDQoNCmBgYHtyfQ0KDQpiaW5hcnlfYmlsb2JlMSA8LSBiaWxvYmUxICU+JSBjaGFubmVsKC4sICJncmF5IikgJT4lIGA8YCguLCAwLjUpICU+JSBid2xhYmVsKC4pDQpiaW5hcnlfYmlsb2JlMiA8LSBiaWxvYmUyICU+JSBjaGFubmVsKC4sICJncmF5IikgJT4lIGA8YCguLCAwLjUpICU+JSBid2xhYmVsKC4pDQoNCmBgYA0KYGBge3J9DQpkaXNwbGF5KGJpbmFyeV9iaWxvYmUxKQ0KYGBgDQoNCmBgYHtyfQ0KZGlzcGxheShiaW5hcnlfYmlsb2JlMikNCmBgYA0KDQpgYGB7cn0NCiMgc2tfYmlsb2JlMSA8LSBiaW5hcnlfYmlsb2JlMSAlPiUgc2tlbGV0b25pemUNCiMgc2tfYmlsb2JlMiA8LSBiaW5hcnlfYmlsb2JlMiAlPiUgc2tlbGV0b25pemUNCmBgYA0KYGBge3J9DQojIHByaW50KGRpbShza19iaWxvYmUxKSkNCiMgcHJpbnQoZGltKHNrX2JpbG9iZTIpKQ0KYGBgDQoNCmBgYHtyfQ0KIyB3cml0ZUltYWdlKHNrX2JpbG9iZTEsICJza2VsZXRvbl9iaWxvYmUxLnBuZyIpDQojIHdyaXRlSW1hZ2Uoc2tfYmlsb2JlMiwgInNrZWxldG9uX2JpbG9iZTIucG5nIikNCg0KYGBgDQoNCmBgYHtyfQ0KdGhpbm5lZDEgPC0gYmluYXJ5X2JpbG9iZTEgJT4lIHRoaW5JbWFnZQ0KZGlzcGxheSh0aGlubmVkMSkNCmBgYA0KDQoNCmBgYHtyfQ0KdGhpbm5lZDIgPC0gYmluYXJ5X2JpbG9iZTIgJT4lIHRoaW5JbWFnZQ0KZGlzcGxheSh0aGlubmVkMikNCmBgYA0KDQoNCmBgYHtyfQ0Kc2FtcGxlc19sYXllcmVkIDwtIGFycmF5KGMoc2tfYmlsb2JlMSwgc2tfYmlsb2JlMiksIGRpbT1jKDIwNDgsIDI3MzIsIDIpKQ0KYGBgDQoNCmBgYHtyfQ0KDQpwcm9jR1BBY29tcGlsZWQgPC0gY21wZnVuKHByb2NHUEEpDQpgYGANCg0KDQpgYGB7cn0NCnByb2NHUEFjb21waWxlZChzYW1wbGVzX2xheWVyZWQsIHJlZmxlY3Q9VFJVRSkNCmBgYA0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCiNJbXBvcnQgYWxsIHRoZSByZXF1aXJlZCBSIHBhY2thZ2VzLg0KbGlicmFyeShFQkltYWdlKQ0KbGlicmFyeShkaXByKQ0KbGlicmFyeShtYWdyaXR0cikNCmxpYnJhcnkoc2VyaWF0aW9uKQ0KbGlicmFyeShzaGFwZXMpDQpsaWJyYXJ5KGNvbXBpbGVyKQ0KbGlicmFyeShSY3BwKQ0KbGlicmFyeShSY3BwQXJtYWRpbGxvKQ0Kc291cmNlQ3BwKCJpbWFnZVRoaW5uaW5nLmNwcCIpDQpgYGANCg0KDQoNCg0KYGBge3J9DQojdGVzdGluZyBmdW5jdGlvbnMgaW4gSGVscGVyLmNwcA0KbTEgPSBtYXRyaXgoYygxLDIsMyw0KSwgbnJvdz0yKQ0KbTIgPSBtYXRyaXgoYygxLDIsMiw0KSwgbnJvdz0yKQ0KZGlmZiA9IGFic19kaWZmKG0xLCBtMikNCmNvdW50Tm9uWmVybyhkaWZmKQ0KYGBgDQoNCg0KYGBge3J9DQpiaWxvYmUxIDwtIHJlYWRJbWFnZSgnYmlsb2JlMV9yZ2IucG5nJykNCmJpbG9iZTIgPC0gcmVhZEltYWdlKCdiaWxvYmUyX3JnYi5wbmcnKQ0KYmlsb2JlMQ0KYGBgDQoNCmBgYHtyfQ0KDQpiaW5hcnlfYmlsb2JlMSA8LSBiaWxvYmUxICU+JSBjaGFubmVsKC4sICJncmF5IikgJT4lIGA8YCguLCAwLjUpICU+JSBid2xhYmVsKC4pDQpiaW5hcnlfYmlsb2JlMiA8LSBiaWxvYmUyICU+JSBjaGFubmVsKC4sICJncmF5IikgJT4lIGA8YCguLCAwLjUpICU+JSBid2xhYmVsKC4pDQoNCmBgYA0KYGBge3J9DQpkaXNwbGF5KGJpbmFyeV9iaWxvYmUxKQ0KYGBgDQoNCmBgYHtyfQ0KZGlzcGxheShiaW5hcnlfYmlsb2JlMikNCmBgYA0KDQpgYGB7cn0NCnRoaW5uZWQxIDwtIGJpbmFyeV9iaWxvYmUxICU+JSB0aGluSW1hZ2UNCmRpc3BsYXkodGhpbm5lZDEpDQpgYGANCg0KDQpgYGB7cn0NCnRoaW5uZWQyIDwtIGJpbmFyeV9iaWxvYmUyICU+JSB0aGluSW1hZ2UNCmRpc3BsYXkodGhpbm5lZDIpDQpgYGANCg0KYGBge3J9DQp3cml0ZUltYWdlKHRoaW5uZWQxLCAidGhpbm5lZF9iaWxvYmUxLnBuZyIpDQp3cml0ZUltYWdlKHRoaW5uZWQyLCAidGhpbm5lZF9iaWxvYmUyLnBuZyIpDQpgYGANCg0KDQpgYGB7cn0NCnNhbXBsZXNfbGF5ZXJlZCA8LSBhcnJheShjKHNrX2JpbG9iZTEsIHNrX2JpbG9iZTIpLCBkaW09YygyMDQ4LCAyNzMyLCAyKSkNCmBgYA0KDQpgYGB7cn0NCg0KcHJvY0dQQWNvbXBpbGVkIDwtIGNtcGZ1bihwcm9jR1BBKQ0KYGBgDQoNCg0KYGBge3J9DQpwcm9jR1BBY29tcGlsZWQoc2FtcGxlc19sYXllcmVkLCByZWZsZWN0PVRSVUUpDQpgYGANCg0KDQo=</div>
 
 
 

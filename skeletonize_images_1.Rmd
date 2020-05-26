@@ -49,21 +49,6 @@ display(binary_bilobe2)
 ```
 
 ```{r}
-# sk_bilobe1 <- binary_bilobe1 %>% skeletonize
-# sk_bilobe2 <- binary_bilobe2 %>% skeletonize
-```
-```{r}
-# print(dim(sk_bilobe1))
-# print(dim(sk_bilobe2))
-```
-
-```{r}
-# writeImage(sk_bilobe1, "skeleton_bilobe1.png")
-# writeImage(sk_bilobe2, "skeleton_bilobe2.png")
-
-```
-
-```{r}
 thinned1 <- binary_bilobe1 %>% thinImage
 display(thinned1)
 ```
@@ -72,6 +57,11 @@ display(thinned1)
 ```{r}
 thinned2 <- binary_bilobe2 %>% thinImage
 display(thinned2)
+```
+
+```{r}
+writeImage(thinned1, "thinned_bilobe1.png")
+writeImage(thinned2, "thinned_bilobe2.png")
 ```
 
 
