@@ -15,7 +15,7 @@ sourceCpp("downSamplePoints.cpp")
 
 procGPAcompiled <- cmpfun(procGPA)
 
-getRiemannianDissimilarityDistance <- cmpfun(function(imagePath1, imagePath2) {
+getTRSD <- cmpfun(function(imagePath1, imagePath2) {
   #turn the images intro binary, where the marking is white and the background is black
   thinnedImage1 <- readImage(imagePath1) %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.) %>% thinImage
   thinnedImage2 <- readImage(imagePath2) %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.) %>% thinImage
@@ -33,7 +33,12 @@ getRiemannianDissimilarityDistance <- cmpfun(function(imagePath1, imagePath2) {
   arr2 <- as.matrix(updatedCurvePoints2)
   #combine the two images as one batch of 2 samples
   samples_layered <- array(c(arr1, arr2), dim=c(minDim, 2, 2))
-  return(procGPAcompiled(samples_layered, reflect=FALSE))
+  procGPAResult <- procGPAcompiled(samples_layered, reflect=FALSE)
+  TRSD <- transformations(procGPAResult$rotated, samples_layered)
+  #access components by key "translation", "rotation", and "scale" finally "dissimilarity"
+  TRSD$dissimilarity <- procGPAResult$rho
+
 })
 
-rd <- getRiemannianDissimilarityDistance('bilobe1_rgb.png', 'bilobe2_rgb.png')
+#test code
+#rd <- getTRSD('bilobe1_rgb.png', 'bilobe2_rgb.png')

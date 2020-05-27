@@ -96,8 +96,18 @@ samples_layered <- array(c(arr1, arr2), dim=c(minDim, 2, 2))
 ```
 
 ```{r}
+TRSD <- list()
 procGPAcompiled <- cmpfun(procGPA)
-procGPAcompiled(samples_layered, reflect=FALSE)
+transformed <- procGPAcompiled(samples_layered, reflect=FALSE)
+TRS <- transformations(transformed$rotated, samples_layered)
+
+TRSD["T"] <- TRS$translation
+TRSD["R"] <- TRS$rotation
+TRSD["S"] <- TRS$scale
+TRSD["D"] <- transformed$rho
+
+TRSD
+
 ```
 
 

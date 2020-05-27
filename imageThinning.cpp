@@ -82,6 +82,7 @@ arma::mat thinningIteration(const arma::mat& image, int iter) {
   return imageInput;
 }
 
+//[[Rcpp::export]]
 arma::mat thinImage(const arma::mat& imageMatrix) {
   arma::mat im = imageMatrix;
   arma::mat prev = imageMatrix;
