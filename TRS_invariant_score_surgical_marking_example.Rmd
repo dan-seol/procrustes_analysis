@@ -38,12 +38,14 @@ countNonZero(diff)
 
 
 ```{r}
+# we read in the images
 bilobe1 <- readImage('bilobe1_rgb.png')
 bilobe2 <- readImage('bilobe2_rgb.png')
 #bilobe1
 ```
 
 ```{r}
+#turn images into grayscale
 binary_bilobe1 <- bilobe1 %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.)
 binary_bilobe2 <- bilobe2 %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.)
 
@@ -57,6 +59,7 @@ display(binary_bilobe2)
 ```
 
 ```{r}
+#thin the images
 thinned1 <- binary_bilobe1 %>% thinImage
 display(thinned1)
 ```

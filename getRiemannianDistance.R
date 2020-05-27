@@ -1,3 +1,4 @@
+#@author: Dan Yunheum Seol<yunheum.seol@mail.mcgill.ca> <yunheum.seol.conseolting@gmail.com>
 #Import all the required R packages.
 library(compiler)
 library(magrittr)
@@ -17,7 +18,7 @@ procGPAcompiled <- cmpfun(procGPA)
 getRiemannianDissimilarityDistance <- cmpfun(function(imagePath1, imagePath2) {
   #turn the images intro binary, where the marking is white and the background is black
   thinnedImage1 <- readImage(imagePath1) %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.) %>% thinImage
-  thinnedImage2 <- readImage(imagePath2)%>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.) %>% thinImage
+  thinnedImage2 <- readImage(imagePath2) %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.) %>% thinImage
   
   #take the 2d coordinates of the image pixels, only the part where it is surgical marking
   curvePoints1 <- getCurvePoints(thinned1)
@@ -34,3 +35,5 @@ getRiemannianDissimilarityDistance <- cmpfun(function(imagePath1, imagePath2) {
   samples_layered <- array(c(arr1, arr2), dim=c(minDim, 2, 2))
   return(procGPAcompiled(samples_layered, reflect=FALSE))
 })
+
+rd <- getRiemannianDissimilarityDistance('bilobe1_rgb.png', 'bilobe2_rgb.png')

@@ -29,4 +29,3 @@ DataFrame getCurvePoints(arma::mat image) {
       Named("y_coords")=yCoords);
   return coords;
 }
-
