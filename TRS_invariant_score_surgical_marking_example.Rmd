@@ -10,6 +10,8 @@ output: pdf_document
 #install all the R packages.
 #if the packages are not installed, please uncomment the line below and run it;
 #install.packages(c("BiocManager", "magrittr", "shapes", "Rcpp", "RcppArmadillo", "kmlShape"))
+#install.packages("vec2dtransf")
+#BiocManager::install("EBImage")
 ```
 
 
@@ -22,6 +24,7 @@ library(shapes)
 library(kmlShape)
 library(Rcpp)
 library(RcppArmadillo)
+library(vec2dtransf)
 #these are helper modules written in RcppArmadillo for faster computation
 sourceCpp("imageThinning.cpp")
 sourceCpp("downSamplePoints.cpp")
@@ -46,6 +49,7 @@ bilobe2 <- readImage('bilobe2_rgb.png')
 
 ```{r}
 #turn images into grayscale
+#then turn the surgical marking as white and background as black
 binary_bilobe1 <- bilobe1 %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.)
 binary_bilobe2 <- bilobe2 %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.)
 
@@ -86,28 +90,59 @@ minDim <- min(dim1, dim2)
 updatedCurvePoints1 <- DouglasPeuckerNbPoints(curvePoints1$x_coords, curvePoints1$y_coords, minDim)
 updatedCurvePoints2 <- DouglasPeuckerNbPoints(curvePoints2$x_coords, curvePoints2$y_coords, minDim)
 
+minDim <- min(dim(updatedCurvePoints1)[1], dim(updatedCurvePoints2)[1])
+updatedCurvePoints1 <- DouglasPeuckerNbPoints(curvePoints1$x_coords, curvePoints1$y_coords, minDim)
+updatedCurvePoints2 <- DouglasPeuckerNbPoints(curvePoints2$x_coords, curvePoints2$y_coords, minDim)
+
+
 ```
 
 
 ```{r}
-arr1 <- as.matrix(updatedCurvePoints1)
-arr2 <- as.matrix(updatedCurvePoints2)
-samples_layered <- array(c(arr1, arr2), dim=c(minDim, 2, 2))
+learnerMarking <- as.matrix(updatedCurvePoints1) #to feed those in procGPA()
+teacherMarking <- as.matrix(updatedCurvePoints2)
+
 ```
 
 ```{r}
-TRSD <- list()
-procGPAcompiled <- cmpfun(procGPA)
-transformed <- procGPAcompiled(samples_layered, reflect=FALSE)
-TRS <- transformations(transformed$rotated, samples_layered)
-
-TRSD["T"] <- TRS$translation
-TRSD["R"] <- TRS$rotation
-TRSD["S"] <- TRS$scale
-TRSD["D"] <- transformed$rho
-
-TRSD
+MarkingEvaluation <- setClass(
+ # Set the name for the class
+ "MarkingEvaluation",
+ # Define the slots
+ slots = c(
+   translation = "matrix",
+   rotation  = "numeric",
+   scale  = "numeric",
+   dissimilarity = "numeric"
+ ),
+ # Set the default values for the slots. (optional)
+ prototype=list(
+   rotation = 0,
+   scale = 1
+ ))
 
 ```
 
+
+```{r}
+#we want the learner to do as well as the teacher, not finding a common mean shape
+#this means we would need to use OPA, not GPA
+procOPAcompiled <- cmpfun(procOPA)
+TRSD_raw <- procOPAcompiled(teacherMarking, learnerMarking)
+rotationAngleInDegree <- ( TRSD_raw$R[1,1] %>% acos )*180/pi
+scale <- TRSD_raw$s
+
+TRSD <- MarkingEvaluation(translation = as.matrix(colMeans(learnerMarking %*% TRSD_raw$R)),
+                  rotation = rotationAngleInDegree,
+                  scale = scale,
+                  dissimilarity = TRSD_raw$rmsd)
+
+
+
+```
+
+
+```{r}
+source("getTRSD.R")
+```
 
