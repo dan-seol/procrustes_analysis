@@ -120,7 +120,11 @@ MarkingEvaluation <- setClass(
    rotation = 0,
    scale = 1
  ))
+```
 
+
+```{r}
+colMeans(TRSD_raw$Bhat - scale*learnerMarking %*% TRSD_raw$R)
 ```
 
 
@@ -129,16 +133,25 @@ MarkingEvaluation <- setClass(
 #this means we would need to use OPA, not GPA
 procOPAcompiled <- cmpfun(procOPA)
 TRSD_raw <- procOPAcompiled(teacherMarking, learnerMarking)
-rotationAngleInDegree <- ( TRSD_raw$R[1,1] %>% acos )*180/pi
+rotationAngleInDegree <- ( TRSD_raw$R[1,1] %>% acos )*180/pi # [[cos theta, sin theta], [-sin theta, cos theta]]
 scale <- TRSD_raw$s
+translation <- t(as.matrix(colMeans( TRSD_raw$Bhat - scale*learnerMarking %*% TRSD_raw$R)))
+colnames(translation) <- c("X", "Y")
 
-TRSD <- MarkingEvaluation(translation = as.matrix(colMeans(learnerMarking %*% TRSD_raw$R)),
+TRSD <- MarkingEvaluation(translation = translation,
                   rotation = rotationAngleInDegree,
                   scale = scale,
                   dissimilarity = TRSD_raw$rmsd)
 
-
-
+```
+```{r}
+#In R, there more than two types of custom "containers" - objects.
+#there are S3 Objects ("contaiers"), which only contains static data itself.
+# you access the data in S3 Objects with dollar sign ($)
+#there are also S4 objects, where you can contain both data, and an inner function you can do something with the data it contains
+#in that case, you access the components by @
+#TRSD
+rownames(TRSD@translation) <- c("hello")
 ```
 
 
