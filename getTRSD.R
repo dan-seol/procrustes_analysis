@@ -69,7 +69,7 @@ getTRSD <- cmpfun(function(imagePath1, imagePath2) {
   return(TRSD)
 })
 
-getTRSDInMilimiters <- cmpfun(function(imagePath1, imagePath2, MilimeterToPixel) {
+getTRSDInMilimeters <- cmpfun(function(imagePath1, imagePath2, MilimeterToPixel) {
   #turn the images intro binary, where the marking is white and the background is black
   thinnedImage1 <- readImage(imagePath1) %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.) %>% thinImage
   thinnedImage2 <- readImage(imagePath2) %>% channel(., "gray") %>% `<`(., 0.5) %>% bwlabel(.) %>% thinImage
