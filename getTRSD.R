@@ -105,4 +105,4 @@ getTRSDInMilimeters <- cmpfun(function(imagePath1, imagePath2, MilimeterToPixel)
   return(TRSD)
 })
 
-d2 <- getTRSD('bilobe1_rgb.png', 'bilobe2_rgb.png')
+#d2 <- getTRSD('bilobe1_rgb.png', 'bilobe2_rgb.png')
