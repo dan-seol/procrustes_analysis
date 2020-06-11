@@ -8,6 +8,7 @@ library(kmlShape)
 library(Rcpp)
 library(RcppArmadillo)
 library(vec2dtransf)
+setwd("C:/Users/didier1708/Documents/GitHub/procrustes_analysis")
 #these are helper modules written in RcppArmadillo for faster computation
 sourceCpp("imageThinning.cpp")
 sourceCpp("downSamplePoints.cpp")
@@ -60,6 +61,9 @@ getTRSDInMilimeters <- cmpfun(function(imagePath1, imagePath2, MilimeterToPixel,
   procOPAResult <- procOPAcompiled(teacherMarking, learnerMarking)
   rotationAngleInDegree <- ( procOPAResult$R[1,1] %>% acos )*180/pi
   scale <- procOPAResult$s
+  plotshapes(teacherMarking, learnerMarking, joinline=1:13)
+
+  plotshapes(procOPAResult$Ahat, procOPAResult$Bhat, joinline=1:13)
   translationMatrix <- matrix(colMeans(procOPAResult$Bhat - scale*learnerMarking %*% procOPAResult$R), ncol=2)/MilimeterToPixel
   colnames(translationMatrix) <- c("X", "Y")
   rownames(translationMatrix) <- c("milimeters")
@@ -85,8 +89,7 @@ main <- function(imageA, imageB, ratio=1, outputname="defaultResult.xlsx", doThi
 
 #by default we do thinning, 
 #set the pixel/mm ratio to 1 
-#and set output name as "defaultResult.xlsx"
-# main("image1_rgb.png", "image2_rgb.png")
+#and set output name as "defaultResult.xlsx"main("image1_rgb.png", "image2_rgb.png")
 
 #you can customize all three
 #main("image4_rgb.png", "image5_rgb.png", 2, "result4x5.xlsx", F) 
