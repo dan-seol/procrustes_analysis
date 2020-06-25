@@ -11,7 +11,7 @@ library(XML)
 library(stringr)
 setwd("C:/Users/didier1708/Documents/GitHub/procrustes_analysis")
 #these are helper modules written in RcppArmadillo for faster computation
-#use the command below on terminal to get svg from png
+#use this command to convert your png to svg
 #./png2svg.sh IMG_0028.png
 
 
