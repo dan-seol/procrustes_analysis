@@ -11,8 +11,9 @@ library(XML)
 library(stringr)
 setwd("C:/Users/didier1708/Documents/GitHub/procrustes_analysis")
 #these are helper modules written in RcppArmadillo for faster computation
+#use the command below on terminal to get svg from png
+#./png2svg.sh IMG_0028.png
 
-#convert rawImagePathRGBA.png -flatten imagePath.png
 
 MarkingEvaluation <- setClass(
   # Set the name for the class
@@ -105,6 +106,7 @@ mainSvg <- cmpfun(function(points1, points2, ratio=1, outputname="defaultResultF
 #you can customize all three
 #main("image4_rgb.png", "image5_rgb.png", 2, "result4x5.xlsx", F) 
 #1mm is 2 pixels, we call output as "result4x5.xlsx", and we won't do thinning
+
 #filenames <- c("new_example_batch/IMG_0028.csv", "new_example_batch/IMG_0029.csv", "new_example_batch/IMG_0030.csv", "new_example_batch/IMG_0031.csv", "new_example_batch/IMG_0032.csv")
 #mainSvg(filenames[1], filenames[1], outputname="28vs28.csv")
 #mainSvg(filenames[1], filenames[2], outputname="28vs29.csv")
